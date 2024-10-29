@@ -6,10 +6,12 @@ import re
 import jwt
 from datetime import datetime, timedelta
 from config import Config
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config.from_object(Config)
 bcrypt = Bcrypt(app)
+CORS(app)
 
 # Secure database connection
 def get_db():
@@ -87,11 +89,7 @@ def login():
     conn.close()
     
     if user and bcrypt.check_password_hash(user['password'], data['password']):
-        token = jwt.encode({
-            'username': data['username'],
-            'exp': datetime.utcnow() + timedelta(hours=24)
-        }, app.config['SECRET_KEY'])
-        return jsonify({'token': token}), 200
+        return jsonify("Successful Login"), 200
         
     return jsonify({'error': 'Invalid credentials'}), 401
 
