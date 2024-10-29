@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
 import sqlite3
 import hashlib
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.secret_key = "hardcoded_secret_key"  # Vulnerable: Hardcoded secret
+CORS(app)
 
 def get_db():
     return sqlite3.connect('vulnerable.db')
