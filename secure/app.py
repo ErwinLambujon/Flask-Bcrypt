@@ -19,7 +19,6 @@ def get_db():
     conn.row_factory = sqlite3.Row
     return conn
 
-# Input validation
 def validate_username(username):
     pattern = r'^[a-zA-Z0-9_]{4,30}$'
     return bool(re.match(pattern, username))
